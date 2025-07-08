@@ -48,12 +48,12 @@ const handlePregunta = async () => {
   if (!pregunta.trim()) return;
 
   try {
-   // const apiKey = process.env.REACT_APP_OPENROUTER_KEY;
+    const apiKey = process.env.REACT_APP_OPENROUTER_KEY;
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer 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`
+        "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
         model: "openrouter/cypher-alpha:free",
