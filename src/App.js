@@ -6,7 +6,12 @@ import Combos from './pages/Combos';
 import ListadoDulces from './pages/ListadoDulces';
 import Inventario from './pages/Inventario';
 import Ventas from './pages/Ventas';
-
+import Proveedores  from './pages/Proveedores';
+import TiempoPreparacion  from './pages/TiempoPreparacion';
+<script
+  crossOrigin="anonymous"
+  src="//unpkg.com/react-scan/dist/auto.global.js"
+></script>
 function App() {
   return (
     <Router>
@@ -33,6 +38,13 @@ function App() {
     <li className="nav-item">
       <a className="nav-link" href="/ventas">Ventas</a>
     </li>
+
+    <li className="nav-item">
+      <a className="nav-link" href="/proveedores">Proveedores</a>
+    </li>
+     <li className="nav-item">
+      <a className="nav-link" href="/preparacion">Tiempo Preparacion</a>
+    </li>
   </ul>
 </nav>
 
@@ -44,6 +56,8 @@ function App() {
           <Route path="/dulces" element={<ListadoDulces />} />
           <Route path="/churrascos" element={<Churrascos />} />
            <Route path="/ventas" element={<Ventas />} />
+            <Route path="/proveedores" element={<Proveedores />} />
+            <Route path="/preparacion" element={<TiempoPreparacion />} />
         </Routes>
       </div>
     </Router>

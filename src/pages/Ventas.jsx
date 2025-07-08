@@ -7,7 +7,7 @@ export default function Ventas() {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    fetch('https://localhost:7125/api/getCombos')
+    fetch('https://localhost:7125/api/dashboard/getCombos')
       .then(res => res.json())
       .then(setCombos);
 
@@ -15,7 +15,13 @@ export default function Ventas() {
       .then(res => res.json())
       .then(setChurrascos);
   }, []);
+const describirChurrasco = (c) => {
+  const guarnicionesTexto = c.guarniciones
+    ?.map(g => `Porción ${g.porcion}: ${g.guarniciones.join(', ')}`)
+    .join(" | ") || "Sin guarniciones";
 
+  return `Carne: ${c.tipoCarne} - Porciones: ${c.porciones} - Extras: ${c.porcionesExtra} - Término: ${c.terminoCoccion} - ${guarnicionesTexto}`;
+};
   const agregarItem = (item, tipo) => {
     const existente = seleccionados.find(i => i.productoId === item.id && i.tipo === tipo);
     if (existente) {
@@ -47,8 +53,7 @@ export default function Ventas() {
       }))
     };
 
-    console.log('DTO enviado a backend:', JSON.stringify(dto, null, 2)); 
-    alert(`JSON enviado:\n${JSON.stringify(dto, null, 2)}`); 
+
 
     fetch('https://localhost:7125/api/ventas', {
       method: 'POST',
@@ -87,21 +92,21 @@ export default function Ventas() {
         ))}
       </div>
 
-      <h4>Platos individuales</h4>
-      <div className="row">
-        {churrascos.map(c => (
-          <div className="col-md-4 mb-3" key={`churrasco-${c.id}`}>
-            <div className="card h-100">
-              <div className="card-body">
-                <h5>{c.descripcion}</h5>
-                <p>Porciones: {c.porciones}</p>
-                <p><strong>Q40.00</strong></p>
-                <button className="btn btn-primary" onClick={() => agregarItem(c, 'churrasco')}>Agregar</button>
-              </div>
-            </div>
-          </div>
-        ))}
+ <h4>Platos individuales</h4>
+<div className="row">
+  {churrascos.map(c => (
+    <div className="col-md-4 mb-3" key={`churrasco-${c.id}`}>
+      <div className="card h-100">
+        <div className="card-body">
+          <h5>Plato #{c.id}</h5>
+          <p>{describirChurrasco(c)}</p>
+          <p><strong>Q40.00</strong></p>
+          <button className="btn btn-primary" onClick={() => agregarItem(c, 'churrasco')}>Agregar</button>
+        </div>
       </div>
+    </div>
+  ))}
+</div>
 
       <h4>Resumen</h4>
       <ul className="list-group">
